@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular Fatorial</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        function calcularFatorial() {
+            let numero;
+
+            while (true) {
+                // Solicita ao usuário um número inteiro positivo
+                let entrada = prompt("Digite um número inteiro positivo:");
+
+                // Tenta converter a entrada em número inteiro
+                numero = parseInt(entrada);
+
+                // Verifica se a conversão foi bem-sucedida e se o número é positivo
+                if (!isNaN(numero) && numero > 0) {
+                    break; // Sai do loop se o número for válido
+                } else {
+                    // Informa o usuário que a entrada foi inválida
+                    alert("Entrada inválida. Por favor, digite um número inteiro positivo.");
+                }
+            }
+
+            // Calcula o fatorial do número
+            let fatorial = 1;
+            for (let i = 1; i <= numero; i++) {
+                fatorial *= i;
+            }
+
+            // Exibe o resultado
+            alert("O fatorial de " + numero + " é " + fatorial + ".");
+        }
+
+        function verificarParOuImpar() {
+            let numero;
+
+            while (true) {
+                // Solicita ao usuário um número inteiro positivo
+                let entrada = prompt("Digite um número inteiro positivo:");
+
+                // Tenta converter a entrada em número inteiro
+                numero = parseInt(entrada);
+
+                // Verifica se a conversão foi bem-sucedida e se o número é positivo
+                if (!isNaN(numero) && numero > 0) {
+                    break; // Sai do loop se o número for válido
+                } else {
+                    // Informa o usuário que a entrada foi inválida
+                    alert("Entrada inválida. Por favor, digite um número inteiro positivo.");
+                }
+            }
+
+            // Verifica se o número é par ou ímpar
+            if (numero % 2 === 0) {
+                alert("O número " + numero + " é par.");
+            } else {
+                alert("O número " + numero + " é ímpar.");
+            }
+        }
+    </script>
+</head>
+<body onload="calcularFatorial()">
+    <button class="button back-button" onclick="window.location.href='semana1.html'">← Voltar para Semana 1</button>
+    <button class="button verify-button" onclick="verificarParOuImpar()">Verificar Número</button>
+</body>
+</html>
