@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Ordenada Dinâmica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 16px;
+            font-size: 16px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ol {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adicionar Item à Lista</h1>
+    <form id="itemForm">
+        <input type="text" id="itemInput" placeholder="Digite um item" required>
+        <button type="submit">Adicionar</button>
+    </form>
+    <ol id="itemList"></ol>
+
+    <script>
+        const items = [];
+        const form = document.getElementById('itemForm');
+        const input = document.getElementById('itemInput');
+        const list = document.getElementById('itemList');
+
+        function updateList() {
+            const sortedItems = items.slice().sort((a, b) => a.localeCompare(b));
+            list.innerHTML = '';
+            sortedItems.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = item;
+                list.appendChild(listItem);
+            });
+        }
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const newItem = input.value.trim();
+            if (newItem && !items.includes(newItem)) {
+                items.push(newItem);
+                updateList();
+                input.value = '';
+                input.focus();
+            } else {
+                alert('Por favor, insira um item válido que ainda não esteja na lista.');
+            }
+        });
+    </script>
+</body>
+</html>
