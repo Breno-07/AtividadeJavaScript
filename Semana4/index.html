@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulário de Cadastro</title>
+    <style>
+      body {
+        font-family: Helvetica, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f5f5f5;
+        margin: 0;
+      }
+
+      .container {
+        width: 600px;
+        padding: 20px;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      h1 {
+        font-size: 26px;
+        color: #000;
+        text-align: left;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        font-size: 10px;
+        color: rgba(34, 34, 34, 0.9);
+        margin-bottom: 5px;
+      }
+
+      .input-line {
+        border: none;
+        border-bottom: 1px solid #ccc;
+        width: 100%;
+        padding: 8px 0;
+        margin-bottom: 15px;
+        font-size: 12px;
+        color: #999;
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .row .input-group {
+        flex-basis: 48%;
+      }
+
+      .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .radio-group label {
+        font-size: 12px;
+        margin-right: 10px;
+      }
+
+      .radio-group input {
+        margin-right: 5px;
+      }
+
+      .error {
+        color: red;
+        font-size: 10px;
+        display: none; /* Oculta o erro inicialmente */
+      }
+
+      .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      button {
+        font-size: 12px;
+        background-color: #eee;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #ddd;
+      }
+
+      input[type="date"] {
+        padding: 6px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulário de Cadastro:</h1>
+        <form id="formulario" onsubmit="validarFormulario(event)">
+            <!-- Nome -->
+            <label for="nome">Nome:</label>
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                class="input-line"
+                placeholder="Digite seu nome completo"
+                onblur="validarNome()"
+            />
+            <span class="error" id="nomeError">Nome inválido</span>
+
+            <!-- Email e Data Nascimento -->
+            <div class="row">
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="input-line"
+                        placeholder="fulano@dominio.com"
+                        onblur="validarEmail()"
+                    />
+                    <span class="error" id="emailError">Email inválido</span>
+                </div>
+                <div class="input-group">
+                    <label for="nascimento">Data Nascimento:</label>
+                    <input
+                        type="date"
+                        id="nascimento"
+                        name="nascimento"
+                        class="input-line"
+                    />
+                </div>
+            </div>
+
+            <!-- Telefones, Professor e Aluno -->
+            <div class="row">
+                <div class="input-group">
+                    <label for="telefoneFixo">Telefone Fixo:</label>
+                    <input
+                        type="text"
+                        id="telefoneFixo"
+                        name="telefoneFixo"
+                        class="input-line"
+                        placeholder="(99)9999-9999"
+                        onblur="validarTelefone('telefoneFixo')"
+                    />
+                    <span class="error" id="telefoneFixoError">Telefone fixo inválido</span>
+                </div>
+                <div class="input-group">
+                    <label for="telefoneCelular">Telefone Celular:</label>
+                    <input
+                        type="text"
+                        id="telefoneCelular"
+                        name="telefoneCelular"
+                        class="input-line"
+                        placeholder="(99)99999-9999"
+                        onblur="validarTelefone('telefoneCelular')"
+                    />
+                    <span class="error" id="telefoneCelularError">Telefone celular inválido</span>
+                </div>
+                <div class="input-group">
+                    <label for="professor">Professor ou Aluno:</label>
+                    <div class="radio-group">
+                        <label for="professor">
+                            <input
+                                type="radio"
+                                id="professor"
+                                name="tipo"
+                                value="Professor"
+                            />
+                            Professor
+                        </label>
+                        <label for="aluno">
+                            <input type="radio" id="aluno" name="tipo" value="Aluno" />
+                            Aluno
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Curso e Matrícula -->
+            <div class="row">
+                <div class="input-group" style="display: none" id="cursoGroup">
+                    <label for="curso">Curso:</label>
+                    <input
+                        type="text"
+                        id="curso"
+                        name="curso"
+                        class="input-line"
+                        placeholder="Digite seu curso"
+                        onblur="validarCurso()"
+                    />
+                </div>
+
+                <div class="input-group" style="display: none" id="areaGroup">
+                    <label for="area">Área de Atuação:</label>
+                    <input
+                        type="text"
+                        id="area"
+                        name="area"
+                        class="input-line"
+                        placeholder="Digite sua área de atuação"
+                        onblur="validarArea()"
+                    />
+                </div>
+
+                <div class="input-group">
+                    <label for="matricula">Matrícula:</label>
+                    <input
+                        type="text"
+                        id="matricula"
+                        name="matricula"
+                        class="input-line"
+                        placeholder="Digite sua matrícula"
+                        onblur="validarMatricula()"
+                    />
+                    <span class="error" id="matriculaError">Matrícula inválida</span>
+                </div>
+            </div>
+
+            <div class="input-line" style="display: none" id="lattesGroup">
+                <label for="lattes">Lattes:</label>
+                <input
+                    type="text"
+                    id="lattes"
+                    name="lattes"
+                    class="input-line"
+                    placeholder="Digite seu lattes"
+                />
+            </div>
+
+            <!-- Botões -->
+            <div class="button-group">
+                <button type="submit">Enviar</button>
+                <button type="reset">Redefinir</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
