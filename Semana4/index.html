@@ -42,24 +42,34 @@
       }
 
       .input-line {
-        border: none;
-        border-bottom: 1px solid #ccc;
-        width: 100%;
-        padding: 8px 0;
-        margin-bottom: 15px;
-        font-size: 12px;
-        color: #999;
+      border: none;
+      border-bottom: 2px solid #ccc; 
+      width: 100%; 
+      padding: 8px 0;
+      margin-bottom: 15px;
+      font-size: 12px;
+      color: #999;
+      box-sizing: border-box;
       }
 
       .row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 15px;
+        margin-bottom: 1px;
       }
 
-      .row .input-group {
-        flex-basis: 48%;
+      .row .input-group, .row .input-group-data{
+        flex-basis: 100%; 
+        margin-right: 3%; 
+      }
+
+      .row .input-group-data {
+        flex-basis: 30%; 
+      }
+
+      .input-group-radio {
+        flex-basis: 60%;
       }
 
       .radio-group {
@@ -71,16 +81,25 @@
       .radio-group label {
         font-size: 12px;
         margin-right: 10px;
+        color: rgba(34, 34, 34, 0.9);
       }
 
       .radio-group input {
         margin-right: 5px;
       }
 
+      .radio-group input[type="radio"]:checked + label {
+        color: black;
+      }
+
+      .radio-group input[type="radio"]:checked {
+        accent-color: black; 
+      }
+
       .error {
         color: red;
         font-size: 10px;
-        display: none; /* Oculta o erro inicialmente */
+        display: none; 
       }
 
       .button-group {
@@ -114,7 +133,7 @@
     <div class="container">
         <h1>Formulário de Cadastro:</h1>
         <form id="formulario" onsubmit="validarFormulario(event)">
-            <!-- Nome -->
+            
             <label for="nome">Nome:</label>
             <input
                 type="text"
@@ -126,7 +145,7 @@
             />
             <span class="error" id="nomeError">Nome inválido</span>
 
-            <!-- Email e Data Nascimento -->
+            
             <div class="row">
                 <div class="input-group">
                     <label for="email">Email:</label>
@@ -135,12 +154,12 @@
                         id="email"
                         name="email"
                         class="input-line"
-                        placeholder="fulano@dominio.com"
+                        placeholder="xxx@xxx.xxx"
                         onblur="validarEmail()"
                     />
                     <span class="error" id="emailError">Email inválido</span>
                 </div>
-                <div class="input-group">
+                <div class="input-group-data">
                     <label for="nascimento">Data Nascimento:</label>
                     <input
                         type="date"
@@ -151,7 +170,7 @@
                 </div>
             </div>
 
-            <!-- Telefones, Professor e Aluno -->
+            
             <div class="row">
                 <div class="input-group">
                     <label for="telefoneFixo">Telefone Fixo:</label>
@@ -160,7 +179,7 @@
                         id="telefoneFixo"
                         name="telefoneFixo"
                         class="input-line"
-                        placeholder="(99)9999-9999"
+                        placeholder="(00)0000-0000"
                         onblur="validarTelefone('telefoneFixo')"
                     />
                     <span class="error" id="telefoneFixoError">Telefone fixo inválido</span>
@@ -172,13 +191,12 @@
                         id="telefoneCelular"
                         name="telefoneCelular"
                         class="input-line"
-                        placeholder="(99)99999-9999"
+                        placeholder="(00)00000-0000"
                         onblur="validarTelefone('telefoneCelular')"
                     />
                     <span class="error" id="telefoneCelularError">Telefone celular inválido</span>
                 </div>
-                <div class="input-group">
-                    <label for="professor">Professor ou Aluno:</label>
+                <div class="input-group-radio">
                     <div class="radio-group">
                         <label for="professor">
                             <input
@@ -197,7 +215,7 @@
                 </div>
             </div>
 
-            <!-- Curso e Matrícula -->
+           
             <div class="row">
                 <div class="input-group" style="display: none" id="cursoGroup">
                     <label for="curso">Curso:</label>
@@ -237,18 +255,18 @@
                 </div>
             </div>
 
-            <div class="input-line" style="display: none" id="lattesGroup">
+            <div style="display: none" id="lattesGroup">
                 <label for="lattes">Lattes:</label>
                 <input
                     type="text"
                     id="lattes"
                     name="lattes"
                     class="input-line"
-                    placeholder="Digite seu lattes"
+                    placeholder="Digite aqui o endereço para seu Lattes"
                 />
             </div>
 
-            <!-- Botões -->
+            
             <div class="button-group">
                 <button type="submit">Enviar</button>
                 <button type="reset">Redefinir</button>
@@ -259,3 +277,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
