@@ -1,99 +1,96 @@
-class Task {
-    constructor(name, description, status = 'pendente') {
-        this.name = name;
-        this.description = description;
+class Tarefa {
+    constructor(nome, descricao, status = 'pendente') {
+        this.nome = nome;
+        this.descricao = descricao;
         this.status = status;
     }
 
-    complete() {
+    concluir() {
         this.status = 'concluída';
     }
 }
 
-class TaskManager {
+class GerenciadorDeTarefas{
     constructor() {
-        this.tasks = [];
-        this.currentTaskIndex = null;
+        this.tarefas = [];
+        this.indiceTarefaAtual = null;
     }
 
-    addTask(name, description) {
-        if (name.trim() && description.trim()) {
-            const task = new Task(name, description);
-            this.tasks.push(task);
-            this.clearInputFields();
-            this.renderTasks();
+    adicionarTarefa(nome, descricao){
+        if (nome.trim() && descricao.trim()) {
+            const tarefa = new Tarefa(nome, descricao);
+            this.tarefas.push(tarefa);
+            this.limparCampos();
+            this.listarTarefas();
         } else {
             alert('Preencha o nome e a descrição da tarefa.');
         }
     }
 
-    clearInputFields() {
-        document.getElementById('taskName').value = '';
-        document.getElementById('taskDescription').value = '';
+    limparCampos() {
+        document.getElementById('nomeTarefa').value = '';
+        document.getElementById('descricaoTarefa').value = '';
     }
 
-    renderTasks() {
-        const taskList = document.getElementById('taskList');
-        taskList.innerHTML = '';
+    listarTarefas() {
+        const listaTarefas = document.getElementById('listaTarefas');
+        listaTarefas.innerHTML = '';
 
-        this.tasks.forEach((task, index) => {
+        this.tarefas.forEach((tarefa, index) => {
             const li = document.createElement('li');
             li.innerHTML = `
-                <span class="${task.status === 'concluída' ? 'completed' : 'bold'}">${task.name}</span>
+                <span class="${tarefa.status === 'concluída' ? 'completed' : 'bold'}">${tarefa.nome}</span>
                 <div>
-                    <button class="action-btn" onclick="taskManager.viewDetails(${index})">Detalhes</button>
-                    ${task.status === 'pendente' ? `<button class="action-btn complete-btn" onclick="taskManager.completeTask(${index})">Concluir</button>` : ''}
-                    <button class="action-btn remove-btn" onclick="taskManager.removeTask(${index})">Remover</button>
+                    <button class="action-btn" onclick="gerenciador.visualizarDetalhes(${index})">Detalhes</button>
+                    ${tarefa.status === 'pendente' ? `<button class="action-btn complete-btn" onclick="gerenciador.marcarComoConcluida(${index})">Concluir</button>` : ''}
+                    <button class="action-btn remove-btn" onclick="gerenciador.removerTarefa(${index})">Remover</button>
                 </div>
             `;
-            taskList.appendChild(li);
+            listaTarefas.appendChild(li);
         });
     }
 
-    viewDetails(index) {
-        const task = this.tasks[index];
-        document.getElementById('modalTitle').innerText = task.name;
-        document.getElementById('modalDescription').innerText = task.description;
-        document.getElementById('modalStatus').innerText = `Status: ${task.status}`;
-        this.currentTaskIndex = index;
-        document.getElementById('taskModal').style.display = 'flex';
+    visualizarDetalhes(index) {
+        const tarefa = this.tarefas[index];
+        document.getElementById('modalTitulo').innerText = tarefa.nome;
+        document.getElementById('modalDescricao').innerText = tarefa.descricao;
+        document.getElementById('modalStatus').innerText = `Status: ${tarefa.status}`;
+        this.indiceTarefaAtual = index;
+        document.getElementById('modalTarefa').style.display = 'flex';
     }
 
-    closeModal() {
-        document.getElementById('taskModal').style.display = 'none';
+    fecharModal() {
+        document.getElementById('modalTarefa').style.display = 'none';
     }
 
-    markAsCompleted() {
-        if (this.currentTaskIndex !== null) {
-            this.tasks[this.currentTaskIndex].complete();
-            this.renderTasks();
-            this.closeModal();
+    marcarComoConcluida(index = null) {
+        if (index !== null) {
+            this.tarefas[index].concluir();
+        } else if (this.indiceTarefaAtual !== null) {
+            this.tarefas[this.indiceTarefaAtual].concluir();
         }
+        this.listarTarefas();
+        this.fecharModal();
     }
 
-    completeTask(index) {
-        this.tasks[index].complete();
-        this.renderTasks();
-    }
-
-    removeTask(index) {
-        this.tasks.splice(index, 1);
-        this.renderTasks();
+    removerTarefa(index) {
+        this.tarefas.splice(index, 1);
+        this.listarTarefas();
     }
 }
 
-const taskManager = new TaskManager();
+const gerenciador = new GerenciadorDeTarefas();
 
-function addTask() {
-    const name = document.getElementById('taskName').value;
-    const description = document.getElementById('taskDescription').value;
-    taskManager.addTask(name, description);
+function adicionarTarefa() {
+    const nome = document.getElementById('nomeTarefa').value;
+    const descricao = document.getElementById('descricaoTarefa').value;
+    gerenciador.adicionarTarefa(nome, descricao);
 }
 
-function closeModal() {
-    taskManager.closeModal();
+function fecharModal() {
+    gerenciador.fecharModal();
 }
 
-function markAsCompleted() {
-    taskManager.markAsCompleted();
+function marcarComoConcluida() {
+    gerenciador.marcarComoConcluida();
 }
