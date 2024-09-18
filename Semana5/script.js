@@ -39,7 +39,7 @@ class TaskManager {
         this.tasks.forEach((task, index) => {
             const li = document.createElement('li');
             li.innerHTML = `
-                <span class="${task.status === 'concluída' ? 'completed' : ''}">${task.name}</span>
+                <span class="${task.status === 'concluída' ? 'completed' : 'bold'}">${task.name}</span>
                 <div>
                     <button class="action-btn" onclick="taskManager.viewDetails(${index})">Detalhes</button>
                     ${task.status === 'pendente' ? `<button class="action-btn complete-btn" onclick="taskManager.completeTask(${index})">Concluir</button>` : ''}
