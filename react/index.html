@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letreiro Fatec</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 2em;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid black;
+            animation: caret 0.8s infinite;
+        }
+        @keyframes caret {
+            50% {
+                border-color: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        function Letreiro() {
+            const texto = "Venha estudar na FATEC";
+            const [displayedText, setDisplayedText] = React.useState("");
+            const [isDeleting, setIsDeleting] = React.useState(false);
+            const [index, setIndex] = React.useState(0);
+ 
+            React.useEffect(() => {
+                const intervalo = setInterval(() => {
+                    if (isDeleting) {
+                        setDisplayedText((prev) => prev.slice(0, -1));
+                        if (displayedText.length === 0) {
+                            setIsDeleting(false);
+                            setIndex(0);
+                        }
+                    } else {
+                        setDisplayedText((prev) => prev + texto[index]);
+                        if (index === texto.length - 1) {
+                            setIsDeleting(true);
+                        }
+                    }
+ 
+                    setIndex((prev) => (isDeleting ? prev : prev + 1) % texto.length);
+                }, isDeleting ? 150 : 200);
+ 
+                return () => clearInterval(intervalo);
+            }, [index, displayedText, isDeleting]);
+ 
+            return (
+                <h1>{displayedText}</h1>
+            );
+        }
+ 
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<Letreiro />);
+    </script>
+</body>
+</html>
+ 
